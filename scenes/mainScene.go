@@ -85,6 +85,7 @@ func CreateScene(myApp fyne.App, w fyne.Window) {
 	// Crear un widget de etiqueta para mostrar la hora actual
 	horaLabel := widget.NewLabel("Hora actual: ")
 
+	// Goroutine para obtener la hora
 	go GetHour(horaLabel)
 
 	// Variable para el contador de gasolina

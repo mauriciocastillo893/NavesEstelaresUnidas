@@ -41,15 +41,17 @@ func RecargarLitio(contadorLabel *widget.Label, recargaLitio chan bool, stopReca
 			}
 		case <-stopRecargar:
 			// Reiniciar el temporizador de recarga de litio
-			go func() {
-				<-time.After(10 * time.Second)
-				if *contadorGasolina < 10000 {
-					*contadorGasolina++
-					contadorLabel.SetText(fmt.Sprintf("Cargador de Litio: %d", *contadorGasolina))
-				}
-			}()
+			go reiniciarTemporizador(contadorGasolina, contadorLabel)
 		}
 	}
+}
+
+func reiniciarTemporizador(contadorGasolina *int, contadorLabel *widget.Label){
+		<-time.After(10 * time.Second)
+		if *contadorGasolina < 10000 {
+			*contadorGasolina++
+			contadorLabel.SetText(fmt.Sprintf("Cargador de Litio: %d", *contadorGasolina))
+		}
 }
 
 func (n *Nave) X() int {
