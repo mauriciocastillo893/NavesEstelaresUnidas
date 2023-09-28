@@ -1,5 +1,12 @@
 package models
 
+import (
+	"fmt"
+	"time"
+
+	"fyne.io/fyne/v2/widget"
+)
+
 type Nave struct {
 	x       int
 	y       int
@@ -19,6 +26,30 @@ type Nave struct {
 
 func NewCharacter(x int, y int, width int, height int, frameX int, frameY int, cyclesX int, upY int, downY int, leftY int, rightY int, speed int, xMov int, yMov int) *Nave{
 	return &Nave{x: x, y: y, width: width, height: height, frameX: frameX, frameY: frameY, cyclesX: cyclesX, upY: upY, downY: downY, leftY: leftY, rightY: rightY, speed: speed, xMov: xMov, yMov: yMov}
+}
+
+func RecargarLitio(contadorLabel *widget.Label, recargaLitio chan bool, stopRecargar chan bool, contadorGasolina *int) {
+	for {
+		select {
+		case <-recargaLitio:
+			// Se presionó una tecla, no recargues
+		case <-time.After(10 * time.Second):
+			// Pasaron 10 segundos sin presionar una tecla, recargar
+			if *contadorGasolina < 10000 {
+				*contadorGasolina++
+				contadorLabel.SetText(fmt.Sprintf("Cargador de Litio: %d", *contadorGasolina))
+			}
+		case <-stopRecargar:
+			// Reiniciar el temporizador de recarga de litio
+			go func() {
+				<-time.After(10 * time.Second)
+				if *contadorGasolina < 10000 {
+					*contadorGasolina++
+					contadorLabel.SetText(fmt.Sprintf("Cargador de Litio: %d", *contadorGasolina))
+				}
+			}()
+		}
+	}
 }
 
 func (n *Nave) X() int {
