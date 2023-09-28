@@ -2,7 +2,7 @@
 **Repository of a estelar game. I hope you enjoy playing this game. ("It's my first game I've created on my whole life") -ry**
 
 ## CURRENT GAME VERSION
-### 1.1v ALPHA
+### 1.13v ALPHA
 ### Developed by: Mauricio Castillo
 ### First date of functional version: Tue, September 26th, 2023
 ### Lastest date of working version: Wed, September 27th, 2023
